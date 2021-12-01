@@ -1,0 +1,108 @@
+<html>
+<head>
+  <title>Email Sending System</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div style="margin:20px 100px;">
+   
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Email Sedding System</a>
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/settings">Settings</a>
+          </li>
+          <li>
+            <a href="/reports">Reports</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content">
+      <div class="col-md-4" style="border: solid 1px black;
+  border-radius: 5px;">
+        <h3>General Settings Values</h3>
+        <form class="form form-class" action="/send_mass_mails" method="post">
+          <% setting_data.forEach(function(item){ %>
+            <div class="form-group">
+              <label class="form-label">Runing Server Count(Max 5000)</label>
+              <input type="number" class="form-control" name="server_count" id="server_count" value="<%=(typeof item.server_counts!='undefined')? item.server_counts:''%>" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Sending Emails(Max 500000)</label>
+              <input type="number" class="form-control" name="sending_emails_count" id="sending_emails_count" value="<%= item.sending_emails_count %>" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Count per Server(Max 100)</label>
+              <input type="number" class="form-control" name="per_emails_count" id="per_emails_count" value="<%= item.per_emails_count %>" disabled>
+            </div>
+          <% }); %>
+          <% general_data.forEach(function(item){ %>
+            <div class="form-group">
+              <label class="form-label">Total Server List:<span style="color:red;"> <%= item.total_server_count %></span></label>
+              <input type="text" class="form-control" name="server_list" id="server_list" value="D://public/server_list.txt" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Sender Email List: <span style="color:red;"><%= item.total_sender_count %></span></label>
+              <input type="text" class="form-control" name="email_list" id="email_list" value="D://public/email_list.txt" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Sender Name List: <span style="color:red;>"><%= item.total_sender_count %></span></label>
+              <input type="text" class="form-control" name="name_list" id="name_list" value="D://public/name_list.txt" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Total Subjects List: <span style="color:red;>"><%= item.total_subject_count %></span></label>
+              <input type="text" class="form-control" name="subjects" id="subjects" value="D://public/subjects.txt" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contents List:  <span style="color:red;>"><%= item.total_subject_count %></span></label>
+              <input type="text" class="form-control" name="contents" id="contents" value="D://public/contents.txt" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Htmls List:  <span style="color:red;>"><%= item.total_subject_count %></span></label>
+              <input type="text" class="form-control" name="htmls" id="htmls" value="D://public/htmls.txt" disabled>
+            </div>
+          <% }); %>
+            <div class="form-action">
+              <input type="submit" name="send" class="btn btn-large btn-primary" value="send">
+            </div>
+          </form>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-7" style="border: solid 1px black;
+  border-radius: 5px;">
+        <h3>Status Per Server of Sending Emails</h3>
+        <table class="table table-bordered table-hover">
+          <thead class="btn-primary">
+            <th>No</th>
+            <th>Server Name</th>
+            <th>Processing Status</th>
+          </thead>
+          <tbody>
+            <% for(var i = 0; i < servers_data.length; i++) { %>
+              <tr>
+                <td>
+                  <%= i+1 %>
+                </td>
+                <td>
+                  <%= servers_data[i].server_name %>
+                </td>
+                <td>
+                  waiting
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div> 
+  </div>
+</body>
+</html>
